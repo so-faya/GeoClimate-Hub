@@ -1,0 +1,335 @@
+[
+  {
+    "State": "Abia",
+    "Average Onset Date": "16-Mar",
+    "Average Season End Date": "7-Dec",
+    "Average Season Length (days)": "21-Sep",
+    "Average Annual Rainfall (mm)": "5-Sep",
+    "Severe Dry Spell (June - August)": "",
+    "Little Dry Season": ""
+  },
+  {
+    "State": "Adamawa",
+    "Average Onset Date": "17-May",
+    "Average Season End Date": "18-Oct",
+    "Average Season Length (days)": "1-Jun",
+    "Average Annual Rainfall (mm)": "14-Nov",
+    "Severe Dry Spell (June - August)": "",
+    "Little Dry Season": ""
+  },
+  {
+    "State": "Akwa-Ibom",
+    "Average Onset Date": "10-Mar",
+    "Average Season End Date": "10-Dec",
+    "Average Season Length (days)": "1-Oct",
+    "Average Annual Rainfall (mm)": "13-Oct",
+    "Severe Dry Spell (June - August)": "",
+    "Little Dry Season": ""
+  },
+  {
+    "State": "Anambra",
+    "Average Onset Date": "24-Mar",
+    "Average Season End Date": "30-Nov",
+    "Average Season Length (days)": "4-Sep",
+    "Average Annual Rainfall (mm)": "21-Mar",
+    "Severe Dry Spell (June - August)": "",
+    "Little Dry Season": ""
+  },
+  {
+    "State": "Bauchi",
+    "Average Onset Date": "4-Jun",
+    "Average Season End Date": "13-Sep",
+    "Average Season Length (days)": "6-May",
+    "Average Annual Rainfall (mm)": "31-Mar",
+    "Severe Dry Spell (June - August)": "",
+    "Little Dry Season": ""
+  },
+  {
+    "State": "Bayelsa",
+    "Average Onset Date": "3-Mar",
+    "Average Season End Date": "17-Dec",
+    "Average Season Length (days)": "15-Oct",
+    "Average Annual Rainfall (mm)": "31-Dec",
+    "Severe Dry Spell (June - August)": "",
+    "Little Dry Season": ""
+  },
+  {
+    "State": "Benue",
+    "Average Onset Date": "6-May",
+    "Average Season End Date": "27-Oct",
+    "Average Season Length (days)": "21-Jun",
+    "Average Annual Rainfall (mm)": "7-Feb",
+    "Severe Dry Spell (June - August)": "",
+    "Little Dry Season": ""
+  },
+  {
+    "State": "Borno",
+    "Average Onset Date": "17-Jun",
+    "Average Season End Date": "12-Oct",
+    "Average Season Length (days)": "24-Apr",
+    "Average Annual Rainfall (mm)": "4-Dec",
+    "Severe Dry Spell (June - August)": "Abadam, Bama, Guzamala, Gwoza,Kaga, Kukawa, Magumeri, Mobbar, Monguno, Ngala, Nganzai",
+    "Little Dry Season": ""
+  },
+  {
+    "State": "Cross River",
+    "Average Onset Date": "26-Mar",
+    "Average Season End Date": "18-Nov",
+    "Average Season Length (days)": "5-Sep",
+    "Average Annual Rainfall (mm)": "18-Aug",
+    "Severe Dry Spell (June - August)": "",
+    "Little Dry Season": ""
+  },
+  {
+    "State": "Delta",
+    "Average Onset Date": "25-Mar",
+    "Average Season End Date": "1-Dec",
+    "Average Season Length (days)": "6-Sep",
+    "Average Annual Rainfall (mm)": "31-Aug",
+    "Severe Dry Spell (June - August)": "",
+    "Little Dry Season": ""
+  },
+  {
+    "State": "Edo",
+    "Average Onset Date": "8-Apr",
+    "Average Season End Date": "24-Nov",
+    "Average Season Length (days)": "18-Aug",
+    "Average Annual Rainfall (mm)": "13-Aug",
+    "Severe Dry Spell (June - August)": "",
+    "Little Dry Season": "Oredo"
+  },
+  {
+    "State": "Ebonyi",
+    "Average Onset Date": "31-Mar",
+    "Average Season End Date": "28-Nov",
+    "Average Season Length (days)": "28-Aug",
+    "Average Annual Rainfall (mm)": "23-Feb",
+    "Severe Dry Spell (June - August)": "",
+    "Little Dry Season": ""
+  },
+  {
+    "State": "Ekiti",
+    "Average Onset Date": "21-Apr",
+    "Average Season End Date": "16-Nov",
+    "Average Season Length (days)": "26-Jul",
+    "Average Annual Rainfall (mm)": "17-Aug",
+    "Severe Dry Spell (June - August)": "",
+    "Little Dry Season": "Ado-Ekiti"
+  },
+  {
+    "State": "Enugu",
+    "Average Onset Date": "5-Apr",
+    "Average Season End Date": "25-Nov",
+    "Average Season Length (days)": "20-Aug",
+    "Average Annual Rainfall (mm)": "1-Oct",
+    "Severe Dry Spell (June - August)": "",
+    "Little Dry Season": ""
+  },
+  {
+    "State": "Federal Captial Territory",
+    "Average Onset Date": "16-May",
+    "Average Season End Date": "13-Nov",
+    "Average Season Length (days)": "28-Jun",
+    "Average Annual Rainfall (mm)": "25-Nov",
+    "Severe Dry Spell (June - August)": "",
+    "Little Dry Season": ""
+  },
+  {
+    "State": "Gombe",
+    "Average Onset Date": "6-Jun",
+    "Average Season End Date": "9-Oct",
+    "Average Season Length (days)": "11-May",
+    "Average Annual Rainfall (mm)": "12-Aug",
+    "Severe Dry Spell (June - August)": "Dukku, Funakaye, Nafada, Yamaltu/Deba",
+    "Little Dry Season": ""
+  },
+  {
+    "State": "Imo",
+    "Average Onset Date": "24-Mar",
+    "Average Season End Date": "2-Dec",
+    "Average Season Length (days)": "8-Sep",
+    "Average Annual Rainfall (mm)": "5-Feb",
+    "Severe Dry Spell (June - August)": "",
+    "Little Dry Season": ""
+  },
+  {
+    "State": "Jigawa",
+    "Average Onset Date": "17-Jun",
+    "Average Season End Date": "4-Oct",
+    "Average Season Length (days)": "14-Apr",
+    "Average Annual Rainfall (mm)": "18-Mar",
+    "Severe Dry Spell (June - August)": "Kaugama, Kazaure, Kiri Kasamma, Maigatani, Malam Madori, Roni, Sule-Tankarkar, Yankwashi",
+    "Little Dry Season": ""
+  },
+  {
+    "State": "Kaduna",
+    "Average Onset Date": "29-May",
+    "Average Season End Date": "11-Oct",
+    "Average Season Length (days)": "14-May",
+    "Average Annual Rainfall (mm)": "21-Jan",
+    "Severe Dry Spell (June - August)": "",
+    "Little Dry Season": ""
+  },
+  {
+    "State": "Kano",
+    "Average Onset Date": "10-Jun",
+    "Average Season End Date": "10-Oct",
+    "Average Season Length (days)": "30-Apr",
+    "Average Annual Rainfall (mm)": "20-Feb",
+    "Severe Dry Spell (June - August)": "Bagwai, Bichi, Dambatta, Gwarzo,  Kunchi, Makoda, Tofa, Tsanyawa,",
+    "Little Dry Season": ""
+  },
+  {
+    "State": "Katsina",
+    "Average Onset Date": "25-Jun",
+    "Average Season End Date": "5-Oct",
+    "Average Season Length (days)": "7-Apr",
+    "Average Annual Rainfall (mm)": "28-Apr",
+    "Severe Dry Spell (June - August)": "Batagarawa, Batsari, Baure, Bindawa,  Charanchi, Danja, Daura, Dutsi, Ingawa, Jibia, Kankia, Katsina, Mai'adua, Main, Mashi, Matazu, Rimi, Sandamu, Zango",
+    "Little Dry Season": ""
+  },
+  {
+    "State": "Kebbi",
+    "Average Onset Date": "22-Jun",
+    "Average Season End Date": "16-Sep",
+    "Average Season Length (days)": "11-Apr",
+    "Average Annual Rainfall (mm)": "15-Dec",
+    "Severe Dry Spell (June - August)": "Aleiro, Arewa-Dndi, Argungu, Augie, Birni Kebbi, Bunza, Jega, Kalgo, Maiyama",
+    "Little Dry Season": ""
+  },
+  {
+    "State": "Kogi",
+    "Average Onset Date": "30-Apr",
+    "Average Season End Date": "29-Oct",
+    "Average Season Length (days)": "30-Jun",
+    "Average Annual Rainfall (mm)": "9-Mar",
+    "Severe Dry Spell (June - August)": "",
+    "Little Dry Season": ""
+  },
+  {
+    "State": "Kwara",
+    "Average Onset Date": "13-May",
+    "Average Season End Date": "23-Oct",
+    "Average Season Length (days)": "11-Jun",
+    "Average Annual Rainfall (mm)": "18-Jun",
+    "Severe Dry Spell (June - August)": "Baruten, Edu, Kaiama, Moro, Pategi",
+    "Little Dry Season": "Ilorin South"
+  },
+  {
+    "State": "Lagos",
+    "Average Onset Date": "29-Mar",
+    "Average Season End Date": "2-Dec",
+    "Average Season Length (days)": "3-Sep",
+    "Average Annual Rainfall (mm)": "17-May",
+    "Severe Dry Spell (June - August)": "",
+    "Little Dry Season": "Ikeja, Lagos Island"
+  },
+  {
+    "State": "Nasarawa",
+    "Average Onset Date": "15-May",
+    "Average Season End Date": "22-Oct",
+    "Average Season Length (days)": "8-Jun",
+    "Average Annual Rainfall (mm)": "26-Oct",
+    "Severe Dry Spell (June - August)": "Akwanga, Lafiia, Obi, Wamba",
+    "Little Dry Season": ""
+  },
+  {
+    "State": "Niger",
+    "Average Onset Date": "29-May",
+    "Average Season End Date": "9-Oct",
+    "Average Season Length (days)": "11-May",
+    "Average Annual Rainfall (mm)": "22-Mar",
+    "Severe Dry Spell (June - August)": "Kontagora, Magama, Mariga, Mashegu, Rijau",
+    "Little Dry Season": ""
+  },
+  {
+    "State": "Ogun",
+    "Average Onset Date": "9-Apr",
+    "Average Season End Date": "29-Nov",
+    "Average Season Length (days)": "21-Aug",
+    "Average Annual Rainfall (mm)": "20-Mar",
+    "Severe Dry Spell (June - August)": "",
+    "Little Dry Season": "Abeokuta North, Abeokuta South, Ijebu Ode"
+  },
+  {
+    "State": "Ondo",
+    "Average Onset Date": "18-Apr",
+    "Average Season End Date": "28-Nov",
+    "Average Season Length (days)": "18-Aug",
+    "Average Annual Rainfall (mm)": "16-Feb",
+    "Severe Dry Spell (June - August)": "",
+    "Little Dry Season": "Akure North, Akure South"
+  },
+  {
+    "State": "Osun",
+    "Average Onset Date": "19-Apr",
+    "Average Season End Date": "23-Nov",
+    "Average Season Length (days)": "5-Aug",
+    "Average Annual Rainfall (mm)": "21-Jul",
+    "Severe Dry Spell (June - August)": "",
+    "Little Dry Season": "Osogbo"
+  },
+  {
+    "State": "Oyo",
+    "Average Onset Date": "22-Apr",
+    "Average Season End Date": "21-Nov",
+    "Average Season Length (days)": "31-Jul",
+    "Average Annual Rainfall (mm)": "12-May",
+    "Severe Dry Spell (June - August)": "Iwajowa, Kajola, Ogbomoso North, Ogbomoso South, Olorunsogo, Orelope. Ori Ile, Saki East, Saki West",
+    "Little Dry Season": "Saki West"
+  },
+  {
+    "State": "Plateau",
+    "Average Onset Date": "17-May",
+    "Average Season End Date": "15-Oct",
+    "Average Season Length (days)": "28-May",
+    "Average Annual Rainfall (mm)": "11-May",
+    "Severe Dry Spell (June - August)": "Kanke, Langtang North",
+    "Little Dry Season": ""
+  },
+  {
+    "State": "Rivers",
+    "Average Onset Date": "5-Mar",
+    "Average Season End Date": "15-Dec",
+    "Average Season Length (days)": "10-Oct",
+    "Average Annual Rainfall (mm)": "2-Jun",
+    "Severe Dry Spell (June - August)": "",
+    "Little Dry Season": ""
+  },
+  {
+    "State": "Sokoto",
+    "Average Onset Date": "7-Jul",
+    "Average Season End Date": "17-Sep",
+    "Average Season Length (days)": "12-Mar",
+    "Average Annual Rainfall (mm)": "22-Aug",
+    "Severe Dry Spell (June - August)": "Binji, Bodinga, Dange-Shuni, Gada, Gwadabawa, Illela, Isa, Rabah, ShagariSilame, Tambuwal, Yabo",
+    "Little Dry Season": ""
+  },
+  {
+    "State": "Taraba",
+    "Average Onset Date": "30-Apr",
+    "Average Season End Date": "28-Oct",
+    "Average Season Length (days)": "28-Jun",
+    "Average Annual Rainfall (mm)": "30-May",
+    "Severe Dry Spell (June - August)": "",
+    "Little Dry Season": ""
+  },
+  {
+    "State": "Yobe",
+    "Average Onset Date": "26-Jun",
+    "Average Season End Date": "1-Oct",
+    "Average Season Length (days)": "26-Mar",
+    "Average Annual Rainfall (mm)": "15-Aug",
+    "Severe Dry Spell (June - August)": "Bade, Bursari, Damaturu, Fika, Geidam, Jakusko, Karasuwa, Machina, Nguru, Potiskum, Tarmua, Yunusari, Yusufari",
+    "Little Dry Season": ""
+  },
+  {
+    "State": "Zamfara",
+    "Average Onset Date": "26-Jun",
+    "Average Season End Date": "20-Sep",
+    "Average Season Length (days)": "26-Mar",
+    "Average Annual Rainfall (mm)": "5-Dec",
+    "Severe Dry Spell (June - August)": "Anka, Bakura, Birnin Magaji, Bukkuyum, Bungudu, Gummi, Kaura Namoda, Shinkafi, Talata Mafara, Tsafe",
+    "Little Dry Season": ""
+  }
+]

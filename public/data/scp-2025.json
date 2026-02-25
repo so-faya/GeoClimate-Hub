@@ -1,0 +1,17 @@
+{
+  "Ogun": {
+    "_state": {
+      "temp_outlook": "Above long-term average",
+      "notes": ["State-level SCP summary (fallback if LGA-specific is missing)."],
+      "source": { "product": "NiMet SCP 2025", "page": 12 }
+    },
+    "Abeokuta North": {
+      "onset_window": "Late Mar – Early Apr",
+      "cessation_window": "Late Oct – Early Nov",
+      "rainfall_total": "1100–1600 mm",
+      "dry_spell_risk": "Low–Moderate",
+      "notes": ["Monitor early season heavy rainfall events."],
+      "source": { "product": "NiMet SCP 2025", "page": 24 }
+    }
+  }
+}
