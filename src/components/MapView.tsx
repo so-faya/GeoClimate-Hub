@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef } from "react";
-import { MapContainer, GeoJSON, useMap, TileLayer } from "react-leaflet";
+import { MapContainer, GeoJSON, useMap } from "react-leaflet";
 import type {
   FeatureCollection,
   Feature,
@@ -13,6 +13,22 @@ import "leaflet/dist/leaflet.css";
 
 type PolyFeat = Feature<Polygon | MultiPolygon, any>;
 type PolyFC = FeatureCollection<Polygon | MultiPolygon, any>;
+
+/**
+ * Replaces the deprecated `whenCreated` prop.
+ * Captures the map instance into the provided ref.
+ */
+function MapRefSetter({
+  mapRef,
+}: {
+  mapRef: React.MutableRefObject<L.Map | null>;
+}) {
+  const map = useMap();
+  useEffect(() => {
+    mapRef.current = map;
+  }, [map, mapRef]);
+  return null;
+}
 
 function makeLgaLabelIcon(text: string) {
   return L.divIcon({
@@ -247,8 +263,10 @@ function MapView(props: {
         maxZoom={12}
         zoomControl={true}
         style={{ flex: 1, width: "100%", minHeight: 0 }}
-        whenCreated={(m) => (mapRef.current = m)}
       >
+        {/* Replaces the deprecated whenCreated prop */}
+        <MapRefSetter mapRef={mapRef} />
+
         <FitNigeriaOnLoad
           states={props.states}
           selectedState={props.selectedState}
