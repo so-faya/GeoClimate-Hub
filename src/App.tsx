@@ -1,5 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import type { Feature, FeatureCollection, Polygon, MultiPolygon } from "geojson";
+import type {
+  Feature,
+  FeatureCollection,
+  Polygon,
+  MultiPolygon,
+} from "geojson";
 
 import Drawer from "./components/Drawer";
 import MapView from "./components/MapView";
@@ -13,21 +18,35 @@ type PolyFC = FeatureCollection<Polygon | MultiPolygon, any>;
 type Selected = { state?: PolyFeat | null; lga?: PolyFeat | null };
 
 function norm(s: any) {
-  return String(s ?? "").trim().toLowerCase().replace(/\s+/g, " ");
+  return String(s ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, " ");
 }
 
 export default function App() {
-  const [states, setStates]         = useState<PolyFC | null>(null);
-  const [lgasAll, setLgasAll]       = useState<PolyFC | null>(null);
-  const [selected, setSelected]     = useState<Selected>({ state: null, lga: null });
+  const [states, setStates] = useState<PolyFC | null>(null);
+  const [lgasAll, setLgasAll] = useState<PolyFC | null>(null);
+  const [selected, setSelected] = useState<Selected>({
+    state: null,
+    lga: null,
+  });
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [nigeriaTime, setNigeriaTime] = useState(getNigeriaDateTimeString());
-  const [scpData, setScpData]       = useState<any>(null);
-  const [lgaInfo, setLgaInfo]       = useState<Record<string, any> | null>(null);
-  const [stateSummary, setStateSummary] = useState<Record<string, any> | null>(null);
-  const [nimetStateOutlook, setNimetStateOutlook] = useState<Record<string, any> | null>(null);
-  const [nimetLga, setNimetLga]     = useState<Record<string, any> | null>(null);
-  const [nimetStateSummary, setNimetStateSummary] = useState<Record<string, any> | null>(null);
+  const [scpData, setScpData] = useState<any>(null);
+  const [lgaInfo, setLgaInfo] = useState<Record<string, any> | null>(null);
+  const [stateSummary, setStateSummary] = useState<Record<string, any> | null>(
+    null,
+  );
+  const [nimetStateOutlook, setNimetStateOutlook] = useState<Record<
+    string,
+    any
+  > | null>(null);
+  const [nimetLga, setNimetLga] = useState<Record<string, any> | null>(null);
+  const [nimetStateSummary, setNimetStateSummary] = useState<Record<
+    string,
+    any
+  > | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -66,26 +85,32 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    const id = window.setInterval(() => setNigeriaTime(getNigeriaDateTimeString()), 1000);
+    const id = window.setInterval(
+      () => setNigeriaTime(getNigeriaDateTimeString()),
+      1000,
+    );
     return () => window.clearInterval(id);
   }, []);
 
   const stateName = useMemo(
     () => (selected.state ? getAdm1Name(selected.state) : null),
-    [selected.state]
+    [selected.state],
   );
 
   const selectedLgaName = useMemo(
     () => (selected.lga ? getAdm2Name(selected.lga) : null),
-    [selected.lga]
+    [selected.lga],
   );
 
   const lgasInState: PolyFC | null = useMemo(() => {
     if (!lgasAll || !stateName) return null;
     const wanted = norm(stateName);
     const filtered = lgasAll.features.filter((f: any) => {
-      const p = f?.properties?.adm1_name || f?.properties?.ADM1_EN ||
-                f?.properties?.NAME_1    || f?.properties?.STATE_NAME;
+      const p =
+        f?.properties?.adm1_name ||
+        f?.properties?.ADM1_EN ||
+        f?.properties?.NAME_1 ||
+        f?.properties?.STATE_NAME;
       return norm(p) === wanted;
     });
     return { type: "FeatureCollection", features: filtered };
@@ -113,12 +138,18 @@ export default function App() {
   async function onLgaClick(f: PolyFeat) {
     setSelected((s) => ({ ...s, lga: f }));
     setDrawerOpen(true);
-    if (!stateName) { setScpData({ error: "Select a state first." }); return; }
+    if (!stateName) {
+      setScpData({ error: "Select a state first." });
+      return;
+    }
     try {
       const lgaName = getAdm2Name(f);
       const outlook = await getScpOutlook(stateName, lgaName);
       setScpData(
-        outlook || { error: "Seasonal outlook not loaded yet (scp-2026.json). You can still use the NiMet SCP table below." }
+        outlook || {
+          error:
+            "Seasonal outlook not loaded yet (scp-2026.json). You can still use the NiMet SCP table below.",
+        },
       );
     } catch (e: any) {
       setScpData({ error: `Failed to load SCP data: ${e?.message ?? e}` });
@@ -134,26 +165,27 @@ export default function App() {
   async function onJumpToState(name: string) {
     if (!name || !states?.features) return;
     const feature = states.features.find(
-      (f: any) => norm(getAdm1Name(f as PolyFeat)) === norm(name)
+      (f: any) => norm(getAdm1Name(f as PolyFeat)) === norm(name),
     ) as PolyFeat | undefined;
     if (feature) await onStateClick(feature);
   }
 
-  const infoKey = selectedLgaName && stateName
-    ? `${norm(selectedLgaName)}|${norm(stateName)}`
-    : null;
+  const infoKey =
+    selectedLgaName && stateName
+      ? `${norm(selectedLgaName)}|${norm(stateName)}`
+      : null;
 
-  const isLgaSelected   = Boolean(selected.lga);
+  const isLgaSelected = Boolean(selected.lga);
   const isStateSelected = Boolean(selected.state && stateName);
 
-  const nimetRow     = infoKey ? nimetLga?.[infoKey] : null;
-  const stateNimet   = stateName ? nimetStateSummary?.[norm(stateName)] : null;
+  const nimetRow = infoKey ? nimetLga?.[infoKey] : null;
+  const stateNimet = stateName ? nimetStateSummary?.[norm(stateName)] : null;
   const stateOutlook = stateName ? nimetStateOutlook?.[norm(stateName)] : null;
 
-  const hasNiMetLga     = Boolean(nimetRow);
-  const hasNiMetState   = Boolean(stateNimet);
+  const hasNiMetLga = Boolean(nimetRow);
+  const hasNiMetState = Boolean(stateNimet);
   const hasStateOutlook = Boolean(stateOutlook);
-  const hasSCP          = scpData && !scpData?.error;
+  const hasSCP = scpData && !scpData?.error;
 
   return (
     <div className="layout">
@@ -172,7 +204,11 @@ export default function App() {
         <div className="mapNav">
           {/* Reset button — only visible when a state is selected */}
           {isStateSelected && (
-            <button className="mapNavReset" onClick={onResetMap} title="Back to full Nigeria view">
+            <button
+              className="mapNavReset"
+              onClick={onResetMap}
+              title="Back to full Nigeria view"
+            >
               <span className="mapNavResetIcon">←</span>
               <span>Nigeria</span>
             </button>
@@ -186,9 +222,13 @@ export default function App() {
               value={stateName ?? ""}
               onChange={(e) => onJumpToState(e.target.value)}
             >
-              <option value="" disabled>Jump to state…</option>
+              <option value="" disabled>
+                Jump to state…
+              </option>
               {stateNames.map((name) => (
-                <option key={name} value={name}>{name}</option>
+                <option key={name} value={name}>
+                  {name}
+                </option>
               ))}
             </select>
             <span className="mapNavPickerArrow">▾</span>
@@ -209,7 +249,9 @@ export default function App() {
           <div className="sectionTitle">Local time (Nigeria)</div>
           <div className="card">
             <div className="timeBig">{nigeriaTime}</div>
-            <div className="muted" style={{ marginTop: 4, fontSize: 12 }}>Timezone: Africa/Lagos</div>
+            <div className="muted" style={{ marginTop: 4, fontSize: 12 }}>
+              Timezone: Africa/Lagos
+            </div>
           </div>
         </div>
 
@@ -220,7 +262,8 @@ export default function App() {
           </div>
         ) : isStateSelected ? (
           <div className="hintBanner">
-            Click any LGA inside <b>{stateName}</b> to view LGA details and seasonal outlook.
+            Click any LGA inside <b>{stateName}</b> to view LGA details and
+            seasonal outlook.
           </div>
         ) : null}
 
@@ -246,15 +289,28 @@ export default function App() {
                       <div className="k">Season end</div>
                       <div className="v">{nimetRow.season_end_date ?? "—"}</div>
                       <div className="k">Season length</div>
-                      <div className="v">{nimetRow.season_length_days != null ? `${nimetRow.season_length_days} days` : "—"}</div>
+                      <div className="v">
+                        {nimetRow.season_length_days != null
+                          ? `${nimetRow.season_length_days} days`
+                          : "—"}
+                      </div>
                       <div className="k">Annual rainfall</div>
-                      <div className="v">{nimetRow.annual_rainfall_mm != null ? `${nimetRow.annual_rainfall_mm} mm` : "—"}</div>
+                      <div className="v">
+                        {nimetRow.annual_rainfall_mm != null
+                          ? `${nimetRow.annual_rainfall_mm} mm`
+                          : "—"}
+                      </div>
                       <div className="k">Little dry season</div>
-                      <div className="v">{nimetRow.little_dry_season ?? "—"}</div>
+                      <div className="v">
+                        {nimetRow.little_dry_season ?? "—"}
+                      </div>
                     </div>
                   </div>
                 ) : (
-                  <p className="muted">No NiMet row found for this LGA — usually a naming mismatch or missing record.</p>
+                  <p className="muted">
+                    No NiMet row found for this LGA — usually a naming mismatch
+                    or missing record.
+                  </p>
                 )}
               </div>
             </details>
@@ -263,13 +319,17 @@ export default function App() {
               <summary>Seasonal Outlook (SCP)</summary>
               <div className="accBody">
                 {scpData?.error ? (
-                  <div className="callout warn"><b>Not loaded:</b> {scpData.error}</div>
+                  <div className="callout warn">
+                    <b>Not loaded:</b> {scpData.error}
+                  </div>
                 ) : scpData ? (
                   <pre className="pre">{JSON.stringify(scpData, null, 2)}</pre>
                 ) : (
                   <p className="muted">Loading SCP outlook…</p>
                 )}
-                <p className="muted" style={{ fontSize: 12 }}>SCP is seasonal guidance — not hourly or daily.</p>
+                <p className="muted" style={{ fontSize: 12 }}>
+                  SCP is seasonal guidance — not hourly or daily.
+                </p>
               </div>
             </details>
 
@@ -277,14 +337,19 @@ export default function App() {
               <summary>Extra LGA Info</summary>
               <div className="accBody">
                 {infoKey && lgaInfo?.[infoKey] ? (
-                  <pre className="pre">{JSON.stringify(lgaInfo[infoKey], null, 2)}</pre>
+                  <pre className="pre">
+                    {JSON.stringify(lgaInfo[infoKey], null, 2)}
+                  </pre>
                 ) : (
-                  <p className="muted">No extra info yet. Add it in <span className="mono">public/data/lga-info.json</span>.</p>
+                  <p className="muted">
+                    No extra info yet.
+                    {/* Add it in{" "}
+                    <span className="mono">public/data/lga-info.json</span>. */}
+                  </p>
                 )}
               </div>
             </details>
           </div>
-
         ) : isStateSelected ? (
           /* ══ STATE VIEW ══ */
           <div className="section">
@@ -301,25 +366,43 @@ export default function App() {
                   <div className="card">
                     <div className="kv">
                       <div className="k">Avg. onset date</div>
-                      <div className="v">{stateOutlook["Average Onset Date"] || "—"}</div>
+                      <div className="v">
+                        {stateOutlook["Average Onset Date"] || "—"}
+                      </div>
                       <div className="k">Avg. season end</div>
-                      <div className="v">{stateOutlook["Average Season End Date"] || "—"}</div>
+                      <div className="v">
+                        {stateOutlook["Average Season End Date"] || "—"}
+                      </div>
                       <div className="k">Avg. season length</div>
-                      <div className="v">{stateOutlook["Average Season Length (days)"] || "—"}</div>
+                      <div className="v">
+                        {stateOutlook["Average Season Length (days)"] || "—"}
+                      </div>
                       <div className="k">Avg. annual rainfall</div>
-                      <div className="v">{stateOutlook["Average Annual Rainfall (mm)"] || "—"}</div>
-                      {stateOutlook["Severe Dry Spell (June - August)"] && (<>
-                        <div className="k">Severe dry spell LGAs</div>
-                        <div className="v">{stateOutlook["Severe Dry Spell (June - August)"]}</div>
-                      </>)}
-                      {stateOutlook["Little Dry Season"] && (<>
-                        <div className="k">Little dry season LGAs</div>
-                        <div className="v">{stateOutlook["Little Dry Season"]}</div>
-                      </>)}
+                      <div className="v">
+                        {stateOutlook["Average Annual Rainfall (mm)"] || "—"}
+                      </div>
+                      {stateOutlook["Severe Dry Spell (June - August)"] && (
+                        <>
+                          <div className="k">Severe dry spell LGAs</div>
+                          <div className="v">
+                            {stateOutlook["Severe Dry Spell (June - August)"]}
+                          </div>
+                        </>
+                      )}
+                      {stateOutlook["Little Dry Season"] && (
+                        <>
+                          <div className="k">Little dry season LGAs</div>
+                          <div className="v">
+                            {stateOutlook["Little Dry Season"]}
+                          </div>
+                        </>
+                      )}
                     </div>
                   </div>
                 ) : (
-                  <p className="muted">No NiMet seasonal outlook found for <b>{stateName}</b>.</p>
+                  <p className="muted">
+                    No NiMet seasonal outlook found for <b>{stateName}</b>.
+                  </p>
                 )}
               </div>
             </details>
@@ -333,72 +416,88 @@ export default function App() {
                     {hasNiMetState ? "NiMet: available" : "NiMet: missing"}
                   </span>
                 </div>
-                {stateName && stateSummary?.[norm(stateName)] ? (() => {
-                  const s = stateSummary[norm(stateName)];
-                  return (
-                    <>
-                      <p className="stateSummaryText">{s.summary}</p>
-                      <hr className="accDivider" />
-                      <div className="kv">
-                        <div className="k">Capital</div>
-                        <div className="v">{s.capital}</div>
-                        {s.largest_city && s.largest_city !== s.capital && (<>
-                          <div className="k">Largest city</div>
-                          <div className="v">{s.largest_city}</div>
-                        </>)}
-                        <div className="k">Region</div>
-                        <div className="v">{s.region}</div>
-                        <div className="k">Founded</div>
-                        <div className="v">{s.founded}</div>
-                        <div className="k">Area</div>
-                        <div className="v">{s.area_km2?.toLocaleString()} km²</div>
-                        <div className="k">Population</div>
-                        <div className="v">
-                          {s.population?.toLocaleString()}
-                          {s.population_year ? ` (${s.population_year} est.)` : ""}
+                {stateName && stateSummary?.[norm(stateName)] ? (
+                  (() => {
+                    const s = stateSummary[norm(stateName)];
+                    return (
+                      <>
+                        <p className="stateSummaryText">{s.summary}</p>
+                        <hr className="accDivider" />
+                        <div className="kv">
+                          <div className="k">Capital</div>
+                          <div className="v">{s.capital}</div>
+                          {s.largest_city && s.largest_city !== s.capital && (
+                            <>
+                              <div className="k">Largest city</div>
+                              <div className="v">{s.largest_city}</div>
+                            </>
+                          )}
+                          <div className="k">Region</div>
+                          <div className="v">{s.region}</div>
+                          <div className="k">Founded</div>
+                          <div className="v">{s.founded}</div>
+                          <div className="k">Area</div>
+                          <div className="v">
+                            {s.area_km2?.toLocaleString()} km²
+                          </div>
+                          <div className="k">Population</div>
+                          <div className="v">
+                            {s.population?.toLocaleString()}
+                            {s.population_year
+                              ? ` (${s.population_year} est.)`
+                              : ""}
+                          </div>
+                          <div className="k">Governor</div>
+                          <div className="v">{s.governor}</div>
+                          <div className="k">Legislature</div>
+                          <div className="v">{s.legislature}</div>
+                          <div className="k">LGAs</div>
+                          <div className="v">{s.lga_count}</div>
+                          {s.borders?.length > 0 && (
+                            <>
+                              <div className="k">Borders</div>
+                              <div className="v">{s.borders.join(", ")}</div>
+                            </>
+                          )}
                         </div>
-                        <div className="k">Governor</div>
-                        <div className="v">{s.governor}</div>
-                        <div className="k">Legislature</div>
-                        <div className="v">{s.legislature}</div>
-                        <div className="k">LGAs</div>
-                        <div className="v">{s.lga_count}</div>
-                        {s.borders?.length > 0 && (<>
-                          <div className="k">Borders</div>
-                          <div className="v">{s.borders.join(", ")}</div>
-                        </>)}
-                      </div>
-                      {s.economy && (
-                        <div>
-                          <hr className="accDivider" />
-                          <div className="summarySectionTitle">Economy</div>
-                          <p className="summaryEconText">{s.economy}</p>
-                        </div>
-                      )}
-                      {s.notable_facts?.length > 0 && (
-                        <div>
-                          <hr className="accDivider" />
-                          <div className="summarySectionTitle">Notable facts</div>
-                          <ul className="summaryFactsList">
-                            {s.notable_facts.map((fact: string, i: number) => (
-                              <li key={i}>{fact}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                    </>
-                  );
-                })() : (
+                        {s.economy && (
+                          <div>
+                            <hr className="accDivider" />
+                            <div className="summarySectionTitle">Economy</div>
+                            <p className="summaryEconText">{s.economy}</p>
+                          </div>
+                        )}
+                        {s.notable_facts?.length > 0 && (
+                          <div>
+                            <hr className="accDivider" />
+                            <div className="summarySectionTitle">
+                              Notable facts
+                            </div>
+                            <ul className="summaryFactsList">
+                              {s.notable_facts.map(
+                                (fact: string, i: number) => (
+                                  <li key={i}>{fact}</li>
+                                ),
+                              )}
+                            </ul>
+                          </div>
+                        )}
+                      </>
+                    );
+                  })()
+                ) : (
                   <p className="muted">
-                    No state summary yet. Add it in <span className="mono">public/data/state-summary.json</span>.
+                    No state summary yet.
+                    {/* Add it in <span className="mono">public/data/state-summary.json</span>. */}
                   </p>
                 )}
               </div>
             </details>
           </div>
-
         ) : (
-          <p className="muted" style={{ marginTop: 8 }}>Click a state on the map to view its summary.</p>
+          <p className="muted" style={{ marginTop: 8 }}>
+            Click a state on the map to view its summary.
+          </p>
         )}
       </Drawer>
     </div>
