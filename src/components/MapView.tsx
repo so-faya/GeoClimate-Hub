@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef } from "react";
-import { MapContainer, GeoJSON, useMap } from "react-leaflet";
+import { MapContainer, GeoJSON, useMap, TileLayer } from "react-leaflet";
 import type {
   FeatureCollection,
   Feature,
@@ -9,6 +9,7 @@ import type {
 import L from "leaflet";
 import pointOnFeature from "@turf/point-on-feature";
 import { getFeatureName } from "../lib/geo";
+import "leaflet/dist/leaflet.css";
 
 type PolyFeat = Feature<Polygon | MultiPolygon, any>;
 type PolyFC = FeatureCollection<Polygon | MultiPolygon, any>;
