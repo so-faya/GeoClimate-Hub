@@ -35,18 +35,11 @@ export default function App() {
   const [nigeriaTime, setNigeriaTime] = useState(getNigeriaDateTimeString());
   const [scpData, setScpData] = useState<any>(null);
   const [lgaInfo, setLgaInfo] = useState<Record<string, any> | null>(null);
-  const [stateSummary, setStateSummary] = useState<Record<string, any> | null>(
-    null,
-  );
-  const [nimetStateOutlook, setNimetStateOutlook] = useState<Record<
-    string,
-    any
-  > | null>(null);
+  const [stateSummary, setStateSummary] = useState<Record<string, any> | null>(null);
+  const [nimetStateOutlook, setNimetStateOutlook] = useState<Record<string, any> | null>(null);
   const [nimetLga, setNimetLga] = useState<Record<string, any> | null>(null);
-  const [nimetStateSummary, setNimetStateSummary] = useState<Record<
-    string,
-    any
-  > | null>(null);
+  const [nimetStateSummary, setNimetStateSummary] = useState<Record<string, any> | null>(null);
+  const [nimetStateSeasonal, setNimetStateSeasonal] = useState<Record<string, any> | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -81,6 +74,9 @@ export default function App() {
 
       const nemetStateRes = await fetch("/data/nimet-state-summary.json");
       if (nemetStateRes.ok) setNimetStateSummary(await nemetStateRes.json());
+
+      const seasonalRes = await fetch("/data/nimet-state-seasonal.json");
+      if (seasonalRes.ok) setNimetStateSeasonal(await seasonalRes.json());
     })();
   }, []);
 
@@ -181,6 +177,7 @@ export default function App() {
   const nimetRow = infoKey ? nimetLga?.[infoKey] : null;
   const stateNimet = stateName ? nimetStateSummary?.[norm(stateName)] : null;
   const stateOutlook = stateName ? nimetStateOutlook?.[norm(stateName)] : null;
+  const stateSeasonal = stateName ? nimetStateSeasonal?.[norm(stateName)] : null;
 
   const hasNiMetLga = Boolean(nimetRow);
   const hasNiMetState = Boolean(stateNimet);
@@ -271,7 +268,7 @@ export default function App() {
         {isLgaSelected ? (
           <div className="section">
             <details className="accordion" open>
-              <summary>NiMet Table Details</summary>
+              <summary>2026 Climate Seasonal Prediction</summary>
               <div className="accBody">
                 <div className="chipRow">
                   <span className={`chip ${hasNiMetLga ? "ok" : "miss"}`}>
@@ -329,6 +326,7 @@ export default function App() {
                 )}
                 <p className="muted" style={{ fontSize: 12 }}>
                   SCP is seasonal guidance — not hourly or daily.
+                  
                 </p>
               </div>
             </details>
@@ -343,8 +341,6 @@ export default function App() {
                 ) : (
                   <p className="muted">
                     No extra info yet.
-                    {/* Add it in{" "}
-                    <span className="mono">public/data/lga-info.json</span>. */}
                   </p>
                 )}
               </div>
@@ -353,9 +349,9 @@ export default function App() {
         ) : isStateSelected ? (
           /* ══ STATE VIEW ══ */
           <div className="section">
-            {/* NiMet Seasonal Outlook — open */}
+            {/* 2026 Climate Seasonal Prediction — open */}
             <details className="accordion" open>
-              <summary>NiMet Seasonal Outlook</summary>
+              <summary>2026 Climate Seasonal Prediction</summary>
               <div className="accBody">
                 <div className="chipRow">
                   <span className={`chip ${hasStateOutlook ? "ok" : "miss"}`}>
@@ -365,13 +361,13 @@ export default function App() {
                 {stateOutlook ? (
                   <div className="card">
                     <div className="kv">
-                      <div className="k">Avg. onset date</div>
+                      <div className="k">Onset Window</div>
                       <div className="v">
-                        {stateOutlook["Average Onset Date"] || "—"}
+                        {stateOutlook["Onset Window"] || "—"}
                       </div>
-                      <div className="k">Avg. season end</div>
+                      <div className="k">Season End Date Window</div>
                       <div className="v">
-                        {stateOutlook["Average Season End Date"] || "—"}
+                        {stateOutlook["Season End Date Window"] || "—"}
                       </div>
                       <div className="k">Avg. season length</div>
                       <div className="v">
@@ -402,6 +398,42 @@ export default function App() {
                 ) : (
                   <p className="muted">
                     No NiMet seasonal outlook found for <b>{stateName}</b>.
+                  </p>
+                )}
+              </div>
+            </details>
+
+            {/* ✅ NiMet Seasonal Outlook — new section */}
+            <details className="accordion" open>
+              <summary>NiMet Seasonal Outlook</summary>
+              <div className="accBody">
+                <div className="chipRow">
+                  <span className={`chip ${stateSeasonal ? "ok" : "miss"}`}>
+                    {stateSeasonal ? "NiMet: available" : "NiMet: missing"}
+                  </span>
+                </div>
+                {stateSeasonal ? (
+                  <div className="card">
+                    <div className="kv">
+                      <div className="k">Rainfall total</div>
+                      <div className="v">{stateSeasonal.rainfall_total}</div>
+                      <div className="k">Onset</div>
+                      <div className="v">{stateSeasonal.onset}</div>
+                      <div className="k">Cessation</div>
+                      <div className="v">{stateSeasonal.cessation}</div>
+                      <div className="k">Season length</div>
+                      <div className="v">{stateSeasonal.season_length}</div>
+                      <div className="k">Dry spell risk</div>
+                      <div className="v">{stateSeasonal.dry_spell_risk}</div>
+                      <div className="k">August break</div>
+                      <div className="v">{stateSeasonal.august_break}</div>
+                      <div className="k">Temp (Jan–May)</div>
+                      <div className="v">{stateSeasonal.temp_jfmam}</div>
+                    </div>
+                  </div>
+                ) : (
+                  <p className="muted">
+                    No seasonal outlook found for <b>{stateName}</b>.
                   </p>
                 )}
               </div>
@@ -488,10 +520,10 @@ export default function App() {
                 ) : (
                   <p className="muted">
                     No state summary yet.
-                    {/* Add it in <span className="mono">public/data/state-summary.json</span>. */}
                   </p>
                 )}
               </div>
+              
             </details>
           </div>
         ) : (
