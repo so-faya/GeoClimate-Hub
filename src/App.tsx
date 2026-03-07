@@ -75,6 +75,7 @@ export default function App() {
       const nemetStateRes = await fetch("/data/nimet-state-summary.json");
       if (nemetStateRes.ok) setNimetStateSummary(await nemetStateRes.json());
 
+      // ✅ Fetch the new seasonal outlook data
       const seasonalRes = await fetch("/data/nimet-state-seasonal.json");
       if (seasonalRes.ok) setNimetStateSeasonal(await seasonalRes.json());
     })();
@@ -177,6 +178,7 @@ export default function App() {
   const nimetRow = infoKey ? nimetLga?.[infoKey] : null;
   const stateNimet = stateName ? nimetStateSummary?.[norm(stateName)] : null;
   const stateOutlook = stateName ? nimetStateOutlook?.[norm(stateName)] : null;
+  // ✅ Derived after stateName is available
   const stateSeasonal = stateName ? nimetStateSeasonal?.[norm(stateName)] : null;
 
   const hasNiMetLga = Boolean(nimetRow);
@@ -312,6 +314,47 @@ export default function App() {
               </div>
             </details>
 
+            {/* NiMet Seasonal Outlook — downscaled from state signal */}
+            <details className="accordion" open>
+              <summary>NiMet Seasonal Outlook</summary>
+              <div className="accBody">
+                <div className="chipRow">
+                  <span className={`chip ${stateSeasonal ? "ok" : "miss"}`}>
+                    {stateSeasonal ? "NiMet: available" : "NiMet: missing"}
+                  </span>
+                </div>
+                {stateSeasonal ? (
+                  <>
+                    <p className="muted" style={{ fontSize: 11, marginBottom: 6 }}>
+                      2026 outlook downscaled from <b>{stateName}</b> state signal.
+                    </p>
+                    <div className="card">
+                      <div className="kv">
+                        <div className="k">Rainfall total</div>
+                        <div className="v">{stateSeasonal.rainfall_total}</div>
+                        <div className="k">Onset</div>
+                        <div className="v">{stateSeasonal.onset}</div>
+                        <div className="k">Cessation</div>
+                        <div className="v">{stateSeasonal.cessation}</div>
+                        <div className="k">Season length</div>
+                        <div className="v">{stateSeasonal.season_length}</div>
+                        <div className="k">Dry spell risk</div>
+                        <div className="v">{stateSeasonal.dry_spell_risk}</div>
+                        <div className="k">August break</div>
+                        <div className="v">{stateSeasonal.august_break}</div>
+                        <div className="k">Temp (Jan–May)</div>
+                        <div className="v">{stateSeasonal.temp_jfmam}</div>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <p className="muted">
+                    No seasonal outlook found for <b>{stateName}</b>.
+                  </p>
+                )}
+              </div>
+            </details>
+
             <details className="accordion">
               <summary>Seasonal Outlook (SCP)</summary>
               <div className="accBody">
@@ -326,7 +369,6 @@ export default function App() {
                 )}
                 <p className="muted" style={{ fontSize: 12 }}>
                   SCP is seasonal guidance — not hourly or daily.
-                  
                 </p>
               </div>
             </details>
@@ -523,7 +565,6 @@ export default function App() {
                   </p>
                 )}
               </div>
-              
             </details>
           </div>
         ) : (
