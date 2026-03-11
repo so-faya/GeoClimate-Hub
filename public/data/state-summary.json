@@ -100,7 +100,15 @@
       "population_year": 2016,
       "governor": "Bala Mohammed",
       "legislature": "Bauchi State House of Assembly",
-      "borders": ["Kano", "Jigawa", "Yobe", "Gombe", "Plateau", "Kaduna", "Zamfara"],
+      "borders": [
+        "Kano",
+        "Jigawa",
+        "Yobe",
+        "Gombe",
+        "Plateau",
+        "Kaduna",
+        "Zamfara"
+      ],
       "summary": "Bauchi State is located in the northeastern part of Nigeria. Its capital is Bauchi city. The state is known for its cultural diversity with over 55 ethnic groups and languages, and for the famous Yankari National Park — Nigeria's most popular game reserve. Bauchi borders seven states, making it one of the most centrally located states in northern Nigeria.",
       "economy": "Bauchi's economy is driven by agriculture, trade, and tourism. Major crops include groundnuts, cotton, sorghum, millet, and rice. The state has significant mineral resources including gold, tin, and columbite.",
       "notable_facts": [
@@ -144,7 +152,16 @@
       "population_year": 2016,
       "governor": "Hyacinth Alia",
       "legislature": "Benue State House of Assembly",
-      "borders": ["Nasarawa", "Plateau", "Taraba", "Cross River", "Enugu", "Anambra", "Kogi", "Cameroon"],
+      "borders": [
+        "Nasarawa",
+        "Plateau",
+        "Taraba",
+        "Cross River",
+        "Enugu",
+        "Anambra",
+        "Kogi",
+        "Cameroon"
+      ],
       "summary": "Benue State is located in north-central Nigeria and is nicknamed 'The Food Basket of the Nation' due to its highly productive agricultural land. Its capital is Makurdi, situated on the banks of the Benue River. The state is home to the Tiv, Idoma, and Igede peoples. Benue is known for its role in feeding the nation with yam, sorghum, cassava, and other food crops.",
       "economy": "Agriculture is the backbone of Benue's economy. The state is one of Nigeria's largest producers of yam, cassava, sorghum, soybeans, and beniseed. The Benue River provides extensive fishing opportunities.",
       "notable_facts": [
@@ -309,7 +326,7 @@
       "lga_count": 17
     },
     {
-      "name": "FCT (Abuja)",
+      "name": "Federal Capital Territory",
       "slug": "fct-abuja",
       "capital": "Abuja",
       "largest_city": "Abuja",
@@ -408,7 +425,16 @@
       "population_year": 2016,
       "governor": "Uba Sani",
       "legislature": "Kaduna State House of Assembly",
-      "borders": ["Niger", "Katsina", "Kano", "Bauchi", "Plateau", "Nassarawa", "FCT", "Zamfara"],
+      "borders": [
+        "Niger",
+        "Katsina",
+        "Kano",
+        "Bauchi",
+        "Plateau",
+        "Nassarawa",
+        "FCT",
+        "Zamfara"
+      ],
       "summary": "Kaduna State is located in northwestern Nigeria. Its capital and largest city is Kaduna. The state was the administrative capital of northern Nigeria during the colonial era and remains one of the most important commercial and political centers in the north. Kaduna is ethnically and religiously diverse, with a roughly equal split between Christian and Muslim populations.",
       "economy": "Kaduna's economy is driven by manufacturing, trade, and agriculture. It has one of the largest concentrations of industry in northern Nigeria, including textiles, steel, and petroleum refining. Agriculture produces cotton, groundnuts, maize, and sorghum.",
       "notable_facts": [
@@ -474,7 +500,14 @@
       "population_year": 2016,
       "governor": "Nasir Idris",
       "legislature": "Kebbi State House of Assembly",
-      "borders": ["Sokoto", "Zamfara", "Niger", "FCT", "Niger (Country)", "Benin (Country)"],
+      "borders": [
+        "Sokoto",
+        "Zamfara",
+        "Niger",
+        "FCT",
+        "Niger (Country)",
+        "Benin (Country)"
+      ],
       "summary": "Kebbi State is located in northwestern Nigeria. Its capital is Birnin Kebbi. The state was created in 1991 from part of Sokoto State. Kebbi is historically associated with the Kebbi Kingdom, which was founded in the 16th century and successfully resisted Sokoto's dominance. The state is known for its fishing culture, particularly the famous Argungu Fishing Festival.",
       "economy": "Agriculture and fishing are the mainstays of Kebbi's economy. The state is a major rice and fish producer. Rice farming has been significantly boosted through government programs.",
       "notable_facts": [
@@ -496,7 +529,18 @@
       "population_year": 2016,
       "governor": "Ahmed Usman Ododo",
       "legislature": "Kogi State House of Assembly",
-      "borders": ["Niger", "Kwara", "Ekiti", "Ondo", "Edo", "Anambra", "Enugu", "Benue", "Nassarawa", "FCT"],
+      "borders": [
+        "Niger",
+        "Kwara",
+        "Ekiti",
+        "Ondo",
+        "Edo",
+        "Anambra",
+        "Enugu",
+        "Benue",
+        "Nassarawa",
+        "FCT"
+      ],
       "summary": "Kogi State is located in north-central Nigeria and is often called 'the Confluence State' because Lokoja, the state capital, is located at the confluence of the Niger and Benue rivers — the two largest rivers in Nigeria. Kogi borders the most states of any state in Nigeria. It is ethnically diverse, with the Igala, Ebira, and Okun-Yoruba as the major ethnic groups.",
       "economy": "Kogi's economy is driven by agriculture, mining, and commerce. The state has significant deposits of iron ore, coal, limestone, and marble. Agriculture produces yam, cassava, and grains.",
       "notable_facts": [
@@ -584,7 +628,16 @@
       "population_year": 2016,
       "governor": "Mohammed Bago",
       "legislature": "Niger State House of Assembly",
-      "borders": ["Kebbi", "Zamfara", "Katsina", "Kaduna", "FCT", "Kogi", "Kwara", "Benin (Country)"],
+      "borders": [
+        "Kebbi",
+        "Zamfara",
+        "Katsina",
+        "Kaduna",
+        "FCT",
+        "Kogi",
+        "Kwara",
+        "Benin (Country)"
+      ],
       "summary": "Niger State is the largest state in Nigeria by land area. Its capital is Minna. The state is located in the north-central zone and is home to some of Nigeria's most important hydroelectric infrastructure, including the Kainji and Shiroro dams on the Niger River. Niger State is ethnically diverse with the Nupe, Gbagyi, Hausa, and Fulani as major groups.",
       "economy": "Niger State's economy is driven by agriculture, hydroelectric power generation, and solid minerals. The Kainji Dam provides a significant portion of Nigeria's electricity. Major crops include yam, cassava, rice, and sorghum.",
       "notable_facts": [
@@ -782,7 +835,15 @@
       "population_year": 2016,
       "governor": "Mai Mala Buni",
       "legislature": "Yobe State House of Assembly",
-      "borders": ["Borno", "Gombe", "Bauchi", "Jigawa", "Kano", "Niger (Country)", "Chad"],
+      "borders": [
+        "Borno",
+        "Gombe",
+        "Bauchi",
+        "Jigawa",
+        "Kano",
+        "Niger (Country)",
+        "Chad"
+      ],
       "summary": "Yobe State is located in northeastern Nigeria. Its capital and largest city is Damaturu. The state was created in 1991 from part of Borno State. Yobe borders Niger and Chad to the north. The state is predominantly arid and is home to the Kanuri, Fulani, and other ethnic groups. Lake Chad, though now significantly reduced, was historically accessible from this region.",
       "economy": "Yobe's economy is primarily agricultural and pastoral. Major crops include millet, sorghum, cowpeas, and groundnuts. Livestock rearing is also significant. The state has deposits of diatomite and uranium.",
       "notable_facts": [

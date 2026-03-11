@@ -33,10 +33,18 @@ export default function App() {
   });
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [nigeriaTime, setNigeriaTime] = useState(getNigeriaDateTimeString());
-  const [stateSummary, setStateSummary] = useState<Record<string, any> | null>(null);
-  const [nimetStateOutlook, setNimetStateOutlook] = useState<Record<string, any> | null>(null);
+  const [stateSummary, setStateSummary] = useState<Record<string, any> | null>(
+    null,
+  );
+  const [nimetStateOutlook, setNimetStateOutlook] = useState<Record<
+    string,
+    any
+  > | null>(null);
   const [nimetLga, setNimetLga] = useState<Record<string, any> | null>(null);
-  const [nimetStateSeasonal, setNimetStateSeasonal] = useState<Record<string, any> | null>(null);
+  const [nimetStateSeasonal, setNimetStateSeasonal] = useState<Record<
+    string,
+    any
+  > | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -150,7 +158,9 @@ export default function App() {
 
   const nimetRow = infoKey ? nimetLga?.[infoKey] : null;
   const stateOutlook = stateName ? nimetStateOutlook?.[norm(stateName)] : null;
-  const stateSeasonal = stateName ? nimetStateSeasonal?.[norm(stateName)] : null;
+  const stateSeasonal = stateName
+    ? nimetStateSeasonal?.[norm(stateName)]
+    : null;
   const stateTemp = stateName ? getStateTemp(stateName) : null;
 
   const hasNiMetLga = Boolean(nimetRow);
@@ -240,11 +250,13 @@ export default function App() {
         {isLgaSelected ? (
           <div className="section">
             <details className="accordion" open>
-              <summary>2026 Climate Seasonal Prediction</summary>
+              <summary>2026 Rainfall Seasonal Prediction</summary>
               <div className="accBody">
                 <div className="chipRow">
                   <span className={`chip ${hasNiMetLga ? "ok" : "miss"}`}>
-                    {hasNiMetLga ? "NiMet: available" : "NiMet: missing"}
+                    {hasNiMetLga
+                      ? "NiMet Rainfall Prediction: available"
+                      : "NiMet: missing"}
                   </span>
                 </div>
                 {nimetRow ? (
@@ -281,53 +293,12 @@ export default function App() {
               </div>
             </details>
 
-            {/* NiMet Seasonal Outlook — downscaled from state signal */}
-            <details className="accordion" open>
-              <summary>NiMet Seasonal Outlook</summary>
-              <div className="accBody">
-                <div className="chipRow">
-                  <span className={`chip ${stateSeasonal ? "ok" : "miss"}`}>
-                    {stateSeasonal ? "NiMet: available" : "NiMet: missing"}
-                  </span>
-                </div>
-                {stateSeasonal ? (
-                  <>
-                    <p className="muted" style={{ fontSize: 11, marginBottom: 6 }}>
-                      2026 outlook downscaled from <b>{stateName}</b> state signal.
-                    </p>
-                    <div className="card">
-                      <div className="kv">
-                        <div className="k">Rainfall total</div>
-                        <div className="v">{stateSeasonal.rainfall_total}</div>
-                        <div className="k">Onset</div>
-                        <div className="v">{stateSeasonal.onset}</div>
-                        <div className="k">Cessation</div>
-                        <div className="v">{stateSeasonal.cessation}</div>
-                        <div className="k">Season length</div>
-                        <div className="v">{stateSeasonal.season_length}</div>
-                        <div className="k">Dry spell risk</div>
-                        <div className="v">{stateSeasonal.dry_spell_risk}</div>
-                        <div className="k">August break</div>
-                        <div className="v">{stateSeasonal.august_break}</div>
-                        <div className="k">Temp (Jan–May)</div>
-                        <div className="v">{stateSeasonal.temp_jfmam}</div>
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <p className="muted">
-                    No seasonal outlook found for <b>{stateName}</b>.
-                  </p>
-                )}
-              </div>
-            </details>
-
             <details className="accordion" open>
               <summary>2026 Temperature Predictions (Jan–May)</summary>
               <div className="accBody">
                 <div className="chipRow">
                   <span className={`chip ${stateTemp ? "ok" : "miss"}`}>
-                    {stateTemp ? "NiMet: available" : "NiMet: missing"}
+                    {stateTemp ? "NiMet Temperature Prediction: available" : "NiMet: missing"}
                   </span>
                 </div>
                 {stateTemp ? (
@@ -369,7 +340,10 @@ export default function App() {
                         </tr>
                       </tbody>
                     </table>
-                    <p className="tempNote">All values in °C · Daytime (max) and Nighttime (min) · State-level data</p>
+                    <p className="tempNote">
+                      All values in °C · Daytime (max) and Nighttime (min) ·
+                      State-level data
+                    </p>
                   </div>
                 ) : (
                   <p className="muted">
@@ -379,17 +353,63 @@ export default function App() {
               </div>
             </details>
 
+            {/* NiMet Seasonal Outlook — downscaled from state signal */}
+            <details className="accordion" open>
+              <summary>NiMet Seasonal Outlook</summary>
+              <div className="accBody">
+                <div className="chipRow">
+                  <span className={`chip ${stateSeasonal ? "ok" : "miss"}`}>
+                    {stateSeasonal ? "NiMet: available" : "NiMet: missing"}
+                  </span>
+                </div>
+                {stateSeasonal ? (
+                  <>
+                    <p
+                      className="muted"
+                      style={{ fontSize: 11, marginBottom: 6 }}
+                    >
+                      2026 outlook downscaled from <b>{stateName}</b> state
+                      signal.
+                    </p>
+                    <div className="card">
+                      <div className="kv">
+                        <div className="k">Rainfall total</div>
+                        <div className="v">{stateSeasonal.rainfall_total}</div>
+                        <div className="k">Onset</div>
+                        <div className="v">{stateSeasonal.onset}</div>
+                        <div className="k">Cessation</div>
+                        <div className="v">{stateSeasonal.cessation}</div>
+                        <div className="k">Season length</div>
+                        <div className="v">{stateSeasonal.season_length}</div>
+                        <div className="k">Dry spell risk</div>
+                        <div className="v">{stateSeasonal.dry_spell_risk}</div>
+                        <div className="k">August break</div>
+                        <div className="v">{stateSeasonal.august_break}</div>
+                        <div className="k">Temp (Jan–May)</div>
+                        <div className="v">{stateSeasonal.temp_jfmam}</div>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <p className="muted">
+                    No seasonal outlook found for <b>{stateName}</b>.
+                  </p>
+                )}
+              </div>
+            </details>
           </div>
         ) : isStateSelected ? (
           /* ══ STATE VIEW ══ */
           <div className="section">
             {/* 2026 Climate Seasonal Prediction — open */}
             <details className="accordion" open>
-              <summary>2026 Climate Seasonal Prediction</summary>
+              <summary>2026 Rainfall Seasonal prediction</summary>
               <div className="accBody">
                 <div className="chipRow">
                   <span className={`chip ${hasStateOutlook ? "ok" : "miss"}`}>
-                    {hasStateOutlook ? "NiMet: available" : "NiMet: missing"}
+                    {hasStateOutlook
+                      ? "NiMet Rainfall Prediction: available"
+                      : "NiMet: missing"}
                   </span>
                 </div>
                 {stateOutlook ? (
@@ -437,49 +457,15 @@ export default function App() {
               </div>
             </details>
 
-            {/* ✅ NiMet Seasonal Outlook — new section */}
-            <details className="accordion" open>
-              <summary>NiMet Seasonal Outlook</summary>
-              <div className="accBody">
-                <div className="chipRow">
-                  <span className={`chip ${stateSeasonal ? "ok" : "miss"}`}>
-                    {stateSeasonal ? "NiMet: available" : "NiMet: missing"}
-                  </span>
-                </div>
-                {stateSeasonal ? (
-                  <div className="card">
-                    <div className="kv">
-                      <div className="k">Rainfall total</div>
-                      <div className="v">{stateSeasonal.rainfall_total}</div>
-                      <div className="k">Onset</div>
-                      <div className="v">{stateSeasonal.onset}</div>
-                      <div className="k">Cessation</div>
-                      <div className="v">{stateSeasonal.cessation}</div>
-                      <div className="k">Season length</div>
-                      <div className="v">{stateSeasonal.season_length}</div>
-                      <div className="k">Dry spell risk</div>
-                      <div className="v">{stateSeasonal.dry_spell_risk}</div>
-                      <div className="k">August break</div>
-                      <div className="v">{stateSeasonal.august_break}</div>
-                      <div className="k">Temp (Jan–May)</div>
-                      <div className="v">{stateSeasonal.temp_jfmam}</div>
-                    </div>
-                  </div>
-                ) : (
-                  <p className="muted">
-                    No seasonal outlook found for <b>{stateName}</b>.
-                  </p>
-                )}
-              </div>
-            </details>
-
             {/* 2026 Temperature Predictions */}
             <details className="accordion" open>
               <summary>2026 Temperature Predictions (Jan–May)</summary>
               <div className="accBody">
                 <div className="chipRow">
                   <span className={`chip ${stateTemp ? "ok" : "miss"}`}>
-                    {stateTemp ? "NiMet: available" : "NiMet: missing"}
+                    {stateTemp
+                      ? "NiMet Temperature Prediction: available"
+                      : "NiMet: missing"}
                   </span>
                 </div>
                 {stateTemp ? (
@@ -521,11 +507,49 @@ export default function App() {
                         </tr>
                       </tbody>
                     </table>
-                    <p className="tempNote">All values in °C · Daytime (max) and Nighttime (min)</p>
+                    <p className="tempNote">
+                      All values in °C · Daytime (max) and Nighttime (min)
+                    </p>
                   </div>
                 ) : (
                   <p className="muted">
                     No temperature data available for <b>{stateName}</b>.
+                  </p>
+                )}
+              </div>
+            </details>
+
+            {/* ✅ NiMet Seasonal Outlook — new section */}
+            <details className="accordion" open>
+              <summary>NiMet Seasonal Outlook</summary>
+              <div className="accBody">
+                <div className="chipRow">
+                  <span className={`chip ${stateSeasonal ? "ok" : "miss"}`}>
+                    {stateSeasonal ? "NiMet: available" : "NiMet: missing"}
+                  </span>
+                </div>
+                {stateSeasonal ? (
+                  <div className="card">
+                    <div className="kv">
+                      <div className="k">Rainfall total</div>
+                      <div className="v">{stateSeasonal.rainfall_total}</div>
+                      <div className="k">Onset</div>
+                      <div className="v">{stateSeasonal.onset}</div>
+                      <div className="k">Cessation</div>
+                      <div className="v">{stateSeasonal.cessation}</div>
+                      <div className="k">Season length</div>
+                      <div className="v">{stateSeasonal.season_length}</div>
+                      <div className="k">Dry spell risk</div>
+                      <div className="v">{stateSeasonal.dry_spell_risk}</div>
+                      <div className="k">August break</div>
+                      <div className="v">{stateSeasonal.august_break}</div>
+                      <div className="k">Temp (Jan–May)</div>
+                      <div className="v">{stateSeasonal.temp_jfmam}</div>
+                    </div>
+                  </div>
+                ) : (
+                  <p className="muted">
+                    No seasonal outlook found for <b>{stateName}</b>.
                   </p>
                 )}
               </div>
@@ -536,8 +560,12 @@ export default function App() {
               <summary>State Summary</summary>
               <div className="accBody">
                 <div className="chipRow">
-                  <span className={`chip ${stateName && stateSummary?.[norm(stateName)] ? "ok" : "miss"}`}>
-                    {stateName && stateSummary?.[norm(stateName)] ? "Available" : "Missing"}
+                  <span
+                    className={`chip ${stateName && stateSummary?.[norm(stateName)] ? "ok" : "miss"}`}
+                  >
+                    {stateName && stateSummary?.[norm(stateName)]
+                      ? "Available"
+                      : "Missing"}
                   </span>
                 </div>
                 {stateName && stateSummary?.[norm(stateName)] ? (
@@ -610,9 +638,7 @@ export default function App() {
                     );
                   })()
                 ) : (
-                  <p className="muted">
-                    No state summary yet.
-                  </p>
+                  <p className="muted">No state summary yet.</p>
                 )}
               </div>
             </details>
