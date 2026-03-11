@@ -1,8 +1,0 @@
-{
-  "Abeokuta North|Ogun": {
-    "hq": "Akomoje",
-    "wards": 16,
-    "key_services": ["Primary healthcare", "Markets", "Public schools"],
-    "alerts": ["Check rainy-season flood advisories in low-lying areas"]
-  }
-}

@@ -11,7 +11,7 @@ import MapView from "./components/MapView";
 
 import { loadGeoJSON, getAdm1Name, getAdm2Name } from "./lib/geo";
 import { getNigeriaDateTimeString } from "./lib/nigeriaTime";
-import { getScpOutlook } from "./lib/scp";
+import { getStateTemp } from "./lib/temperature";
 
 type PolyFeat = Feature<Polygon | MultiPolygon, any>;
 type PolyFC = FeatureCollection<Polygon | MultiPolygon, any>;
@@ -33,21 +33,15 @@ export default function App() {
   });
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [nigeriaTime, setNigeriaTime] = useState(getNigeriaDateTimeString());
-  const [scpData, setScpData] = useState<any>(null);
-  const [lgaInfo, setLgaInfo] = useState<Record<string, any> | null>(null);
   const [stateSummary, setStateSummary] = useState<Record<string, any> | null>(null);
   const [nimetStateOutlook, setNimetStateOutlook] = useState<Record<string, any> | null>(null);
   const [nimetLga, setNimetLga] = useState<Record<string, any> | null>(null);
-  const [nimetStateSummary, setNimetStateSummary] = useState<Record<string, any> | null>(null);
   const [nimetStateSeasonal, setNimetStateSeasonal] = useState<Record<string, any> | null>(null);
 
   useEffect(() => {
     (async () => {
       const adm1 = (await loadGeoJSON("/data/nga_adm1.geojson")) as any;
       setStates(adm1);
-
-      const infoRes = await fetch("/data/lga-info.json");
-      if (infoRes.ok) setLgaInfo(await infoRes.json());
 
       const stateRes = await fetch("/data/state-summary.json");
       if (stateRes.ok) {
@@ -71,9 +65,6 @@ export default function App() {
 
       const nemetLgaRes = await fetch("/data/nimet-lga.json");
       if (nemetLgaRes.ok) setNimetLga(await nemetLgaRes.json());
-
-      const nemetStateRes = await fetch("/data/nimet-state-summary.json");
-      if (nemetStateRes.ok) setNimetStateSummary(await nemetStateRes.json());
 
       // ✅ Fetch the new seasonal outlook data
       const seasonalRes = await fetch("/data/nimet-state-seasonal.json");
@@ -125,38 +116,20 @@ export default function App() {
   async function onStateClick(f: PolyFeat) {
     setSelected({ state: f, lga: null });
     setDrawerOpen(true);
-    setScpData(null);
     if (!lgasAll) {
       const adm2 = (await loadGeoJSON("/data/nga_adm2.geojson")) as any;
       setLgasAll(adm2);
     }
   }
 
-  async function onLgaClick(f: PolyFeat) {
+  function onLgaClick(f: PolyFeat) {
     setSelected((s) => ({ ...s, lga: f }));
     setDrawerOpen(true);
-    if (!stateName) {
-      setScpData({ error: "Select a state first." });
-      return;
-    }
-    try {
-      const lgaName = getAdm2Name(f);
-      const outlook = await getScpOutlook(stateName, lgaName);
-      setScpData(
-        outlook || {
-          error:
-            "Seasonal outlook not loaded yet (scp-2026.json). You can still use the NiMet SCP table below.",
-        },
-      );
-    } catch (e: any) {
-      setScpData({ error: `Failed to load SCP data: ${e?.message ?? e}` });
-    }
   }
 
   function onResetMap() {
     setSelected({ state: null, lga: null });
     setDrawerOpen(false);
-    setScpData(null);
   }
 
   async function onJumpToState(name: string) {
@@ -176,15 +149,12 @@ export default function App() {
   const isStateSelected = Boolean(selected.state && stateName);
 
   const nimetRow = infoKey ? nimetLga?.[infoKey] : null;
-  const stateNimet = stateName ? nimetStateSummary?.[norm(stateName)] : null;
   const stateOutlook = stateName ? nimetStateOutlook?.[norm(stateName)] : null;
-  // ✅ Derived after stateName is available
   const stateSeasonal = stateName ? nimetStateSeasonal?.[norm(stateName)] : null;
+  const stateTemp = stateName ? getStateTemp(stateName) : null;
 
   const hasNiMetLga = Boolean(nimetRow);
-  const hasNiMetState = Boolean(stateNimet);
   const hasStateOutlook = Boolean(stateOutlook);
-  const hasSCP = scpData && !scpData?.error;
 
   return (
     <div className="layout">
@@ -276,9 +246,6 @@ export default function App() {
                   <span className={`chip ${hasNiMetLga ? "ok" : "miss"}`}>
                     {hasNiMetLga ? "NiMet: available" : "NiMet: missing"}
                   </span>
-                  <span className={`chip ${hasSCP ? "ok" : "warn"}`}>
-                    {hasSCP ? "SCP: available" : "SCP: not loaded"}
-                  </span>
                 </div>
                 {nimetRow ? (
                   <div className="card">
@@ -355,38 +322,63 @@ export default function App() {
               </div>
             </details>
 
-            <details className="accordion">
-              <summary>Seasonal Outlook (SCP)</summary>
+            <details className="accordion" open>
+              <summary>2026 Temperature Predictions (Jan–May)</summary>
               <div className="accBody">
-                {scpData?.error ? (
-                  <div className="callout warn">
-                    <b>Not loaded:</b> {scpData.error}
+                <div className="chipRow">
+                  <span className={`chip ${stateTemp ? "ok" : "miss"}`}>
+                    {stateTemp ? "NiMet: available" : "NiMet: missing"}
+                  </span>
+                </div>
+                {stateTemp ? (
+                  <div className="card" style={{ overflowX: "auto" }}>
+                    <table className="tempTable">
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th>Jan</th>
+                          <th>Feb</th>
+                          <th>Mar</th>
+                          <th>Apr</th>
+                          <th>May</th>
+                          <th className="tempAvgCol">Avg</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td className="tempRowLabel">
+                            <span className="tempIcon">☀️</span> Day
+                          </td>
+                          <td>{stateTemp.day.jan}°</td>
+                          <td>{stateTemp.day.feb}°</td>
+                          <td>{stateTemp.day.mar}°</td>
+                          <td>{stateTemp.day.apr}°</td>
+                          <td>{stateTemp.day.may}°</td>
+                          <td className="tempAvgCol">{stateTemp.day.avg}°</td>
+                        </tr>
+                        <tr>
+                          <td className="tempRowLabel">
+                            <span className="tempIcon">🌙</span> Night
+                          </td>
+                          <td>{stateTemp.night.jan}°</td>
+                          <td>{stateTemp.night.feb}°</td>
+                          <td>{stateTemp.night.mar}°</td>
+                          <td>{stateTemp.night.apr}°</td>
+                          <td>{stateTemp.night.may}°</td>
+                          <td className="tempAvgCol">{stateTemp.night.avg}°</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <p className="tempNote">All values in °C · Daytime (max) and Nighttime (min) · State-level data</p>
                   </div>
-                ) : scpData ? (
-                  <pre className="pre">{JSON.stringify(scpData, null, 2)}</pre>
-                ) : (
-                  <p className="muted">Loading SCP outlook…</p>
-                )}
-                <p className="muted" style={{ fontSize: 12 }}>
-                  SCP is seasonal guidance — not hourly or daily.
-                </p>
-              </div>
-            </details>
-
-            <details className="accordion">
-              <summary>Extra LGA Info</summary>
-              <div className="accBody">
-                {infoKey && lgaInfo?.[infoKey] ? (
-                  <pre className="pre">
-                    {JSON.stringify(lgaInfo[infoKey], null, 2)}
-                  </pre>
                 ) : (
                   <p className="muted">
-                    No extra info yet.
+                    No temperature data available for <b>{stateName}</b>.
                   </p>
                 )}
               </div>
             </details>
+
           </div>
         ) : isStateSelected ? (
           /* ══ STATE VIEW ══ */
@@ -481,13 +473,71 @@ export default function App() {
               </div>
             </details>
 
+            {/* 2026 Temperature Predictions */}
+            <details className="accordion" open>
+              <summary>2026 Temperature Predictions (Jan–May)</summary>
+              <div className="accBody">
+                <div className="chipRow">
+                  <span className={`chip ${stateTemp ? "ok" : "miss"}`}>
+                    {stateTemp ? "NiMet: available" : "NiMet: missing"}
+                  </span>
+                </div>
+                {stateTemp ? (
+                  <div className="card" style={{ overflowX: "auto" }}>
+                    <table className="tempTable">
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th>Jan</th>
+                          <th>Feb</th>
+                          <th>Mar</th>
+                          <th>Apr</th>
+                          <th>May</th>
+                          <th className="tempAvgCol">Avg</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td className="tempRowLabel">
+                            <span className="tempIcon">☀️</span> Day
+                          </td>
+                          <td>{stateTemp.day.jan}°</td>
+                          <td>{stateTemp.day.feb}°</td>
+                          <td>{stateTemp.day.mar}°</td>
+                          <td>{stateTemp.day.apr}°</td>
+                          <td>{stateTemp.day.may}°</td>
+                          <td className="tempAvgCol">{stateTemp.day.avg}°</td>
+                        </tr>
+                        <tr>
+                          <td className="tempRowLabel">
+                            <span className="tempIcon">🌙</span> Night
+                          </td>
+                          <td>{stateTemp.night.jan}°</td>
+                          <td>{stateTemp.night.feb}°</td>
+                          <td>{stateTemp.night.mar}°</td>
+                          <td>{stateTemp.night.apr}°</td>
+                          <td>{stateTemp.night.may}°</td>
+                          <td className="tempAvgCol">{stateTemp.night.avg}°</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <p className="tempNote">All values in °C · Daytime (max) and Nighttime (min)</p>
+                  </div>
+                ) : (
+                  <p className="muted">
+                    No temperature data available for <b>{stateName}</b>.
+                  </p>
+                )}
+              </div>
+            </details>
+
             {/* State Summary — open by default */}
             <details className="accordion" open>
               <summary>State Summary</summary>
               <div className="accBody">
                 <div className="chipRow">
-                  <span className={`chip ${hasNiMetState ? "ok" : "miss"}`}>
-                    {hasNiMetState ? "NiMet: available" : "NiMet: missing"}
+                  <span className={`chip ${stateName && stateSummary?.[norm(stateName)] ? "ok" : "miss"}`}>
+                    {stateName && stateSummary?.[norm(stateName)] ? "Available" : "Missing"}
                   </span>
                 </div>
                 {stateName && stateSummary?.[norm(stateName)] ? (
