@@ -386,8 +386,7 @@ function MapView(props: {
         )}
       </MapContainer>
       <div className="nimetAttribution">
-        © NiMet 2026 – Nigerian Meteorological Agency. Data used with
-        permission.
+        © NiMet 2026 – Nigerian Meteorological Agency.
       </div>
     </>
   );

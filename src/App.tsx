@@ -25,6 +25,8 @@ function norm(s: any) {
 }
 
 export default function App() {
+  const [introOpen, setIntroOpen] = useState(true);
+  const [introClosing, setIntroClosing] = useState(false);
   const [states, setStates] = useState<PolyFC | null>(null);
   const [lgasAll, setLgasAll] = useState<PolyFC | null>(null);
   const [selected, setSelected] = useState<Selected>({
@@ -166,8 +168,138 @@ export default function App() {
   const hasNiMetLga = Boolean(nimetRow);
   const hasStateOutlook = Boolean(stateOutlook);
 
+  function closeIntro() {
+    setIntroClosing(true);
+    setTimeout(() => {
+      setIntroOpen(false);
+      setIntroClosing(false);
+    }, 380);
+  }
+
   return (
     <div className="layout">
+      {/* ── Intro Modal ── */}
+      {introOpen && (
+        <>
+          <style>{`
+            @keyframes introOverlayIn { from { opacity:0 } to { opacity:1 } }
+            @keyframes introOverlayOut { from { opacity:1 } to { opacity:0 } }
+            @keyframes introCardIn { from { opacity:0; transform:translateY(24px) scale(0.97) } to { opacity:1; transform:translateY(0) scale(1) } }
+            @keyframes introCardOut { from { opacity:1; transform:translateY(0) } to { opacity:0; transform:translateY(14px) } }
+            .intro-overlay {
+              position:fixed; inset:0; z-index:99999;
+              background:rgba(15,30,10,0.68); backdrop-filter:blur(5px);
+              display:flex; align-items:center; justify-content:center; padding:1.25rem;
+              animation: introOverlayIn 0.35s ease forwards;
+            }
+            .intro-overlay.closing { animation: introOverlayOut 0.35s ease forwards; }
+            .intro-card {
+              background:#fff; border-radius:12px;
+              max-width:640px; width:100%; overflow:hidden;
+              box-shadow:0 28px 72px rgba(0,0,0,0.32);
+              animation: introCardIn 0.42s cubic-bezier(0.22,1,0.36,1) forwards;
+              font-family:var(--font);
+            }
+            .intro-card.closing { animation: introCardOut 0.32s ease forwards; }
+            .intro-head {
+              background:linear-gradient(135deg,#4a8a10 0%,#7bb927 60%,#a2d45e 100%);
+              padding:1.75rem 1.75rem 1.4rem; position:relative; overflow:hidden;
+            }
+            .intro-head::after {
+              content:'🌦'; position:absolute; right:1.5rem; top:50%;
+              transform:translateY(-50%); font-size:4rem; opacity:0.15; pointer-events:none;
+            }
+            .intro-badge {
+              display:inline-block; background:rgba(255,255,255,0.2);
+              border:1px solid rgba(255,255,255,0.35); color:#fff;
+              font-size:0.66rem; font-weight:800; letter-spacing:0.12em;
+              text-transform:uppercase; padding:0.22rem 0.6rem; border-radius:99px;
+              margin-bottom:0.65rem;
+            }
+            .intro-head h2 {
+              font-size:1.55rem; font-weight:900; color:#fff;
+              margin:0 0 0.3rem; line-height:1.2; letter-spacing:-0.3px;
+            }
+            .intro-head p {
+              color:rgba(255,255,255,0.82); font-size:0.8rem; margin:0; font-weight:600;
+            }
+            .intro-body { padding:1.35rem 1.75rem; background:#fafaf8; }
+            .intro-lead {
+              font-size:0.875rem; line-height:1.72; color:#2d3a25;
+              font-weight:600; margin:0 0 1rem;
+            }
+            .intro-hr { border:none; border-top:1px solid rgba(43,43,43,0.1); margin:0 0 1rem; }
+            .intro-bullets { display:flex; flex-direction:column; gap:0.65rem; margin:0; }
+            .intro-bul { display:flex; gap:0.65rem; align-items:flex-start; }
+            .intro-dot {
+              flex-shrink:0; width:6px; height:6px; border-radius:50%;
+              background:var(--agl-green); margin-top:0.58em;
+            }
+            .intro-bul p { font-size:0.82rem; line-height:1.65; color:#3d4d30; margin:0; }
+            .intro-foot {
+              padding:0.9rem 1.75rem 1.35rem; background:#fff;
+              border-top:1px solid rgba(43,43,43,0.08);
+              display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+            }
+            .intro-note { font-size:0.74rem; color:#7a9060; max-width:300px; line-height:1.5; }
+            .intro-btn {
+              background:var(--agl-green); color:#fff; border:none; border-radius:8px;
+              padding:0.6rem 1.4rem; font-family:var(--font); font-size:0.84rem;
+              font-weight:800; cursor:pointer; letter-spacing:0.02em; white-space:nowrap;
+              transition:background 0.15s, transform 0.12s;
+            }
+            .intro-btn:hover { background:var(--agl-green-dk); transform:translateY(-1px); }
+            .intro-btn:active { transform:translateY(0); }
+          `}</style>
+          <div
+            className={`intro-overlay${introClosing ? " closing" : ""}`}
+            onClick={closeIntro}
+          >
+            <div
+              className={`intro-card${introClosing ? " closing" : ""}`}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="intro-head">
+                <div className="intro-badge">NiMet · 2026 Seasonal Outlook</div>
+                <h2>Nigeria Seasonal Climate Outlook 2026</h2>
+                <p>State-level insights for agriculture & water management</p>
+              </div>
+              <div className="intro-body">
+                <p className="intro-lead">
+                  The 2026 outlook indicates an <strong>early to normal</strong> start of the rainy season,
+                  with <strong>normal to above-normal rainfall</strong> across most of Nigeria.
+                  The forecast is shaped by a weak La Niña and neutral El Niño–Southern Oscillation conditions.
+                </p>
+                <hr className="intro-hr" />
+                <div className="intro-bullets">
+                  <div className="intro-bul">
+                    <div className="intro-dot" />
+                    <p><strong>Southern Nigeria</strong> may experience early rainfall in January–February from MJO and Mid-Latitude Waves, with risk of localised flooding in low-lying areas.</p>
+                  </div>
+                  <div className="intro-bul">
+                    <div className="intro-dot" />
+                    <p>Most states will have <strong>normal rainfall and season length</strong>, though some regions may see longer or shorter seasons. Temperatures are expected to stay <strong>above long-term averages</strong> in the first half of 2026.</p>
+                  </div>
+                  <div className="intro-bul">
+                    <div className="intro-dot" />
+                    <p>Dry spells are possible during the growing season. The <strong>Little Dry Season</strong> (around late July) may be more intense in parts of southwestern Nigeria.</p>
+                  </div>
+                </div>
+              </div>
+              <div className="intro-foot">
+                <p className="intro-note">
+                  Click any state on the map to explore LGA-level seasonal forecasts and agro-climate data.
+                </p>
+                <button className="intro-btn" onClick={closeIntro}>
+                  Explore the Map →
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
+
       <div className="mapWrap">
         <MapView
           states={states}

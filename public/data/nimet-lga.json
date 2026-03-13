@@ -5851,9 +5851,9 @@
     "severe_dry_spell": "",
     "little_dry_season": ""
   },
-  "lafiia|nasarawa": {
+  "lafia|nasarawa": {
     "state": "Nasarawa",
-    "lga": "Lafiia",
+    "lga": "Lafia",
     "onset_date": "16-May",
     "season_end_date": "22-Oct",
     "season_length_days": 158,
@@ -5895,9 +5895,9 @@
     "severe_dry_spell": "",
     "little_dry_season": ""
   },
-  "tota|nasarawa": {
+  "toto|nasarawa": {
     "state": "Nasarawa",
-    "lga": "Tota",
+    "lga": "Toto",
     "onset_date": "11-May",
     "season_end_date": "25-Oct",
     "season_length_days": 167,
